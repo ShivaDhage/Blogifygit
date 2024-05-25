@@ -1,10 +1,10 @@
 import React from 'react'
 
-function Logo({width='100px'}) {
+function Logo({className}) {
   return (
-    <div >
-      <img  src="./logo.png" alt="logo" />
-    </div>
+    
+      <img  src="./logo.png" alt="logo"  className={className}/> 
+    
   )
 }
 

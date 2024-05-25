@@ -7,7 +7,7 @@ import RTE from "./RTE";
 import Signup from "./Signup";
 import Login from "./Login"
 import PostCard from "./PostCard";
-import postForm from './post-form/postForm'
+import PostForm from './post-form/PostForm'
 import AuthLayout from './AuthLayout'
 import Button from './Button'
 import Input from './Input'
@@ -15,6 +15,6 @@ import Select from './Select'
 
 export{
     Header,Footer,Container,Logo,LogoutBtn,RTE,
-    Signup,Login,postForm,PostCard,AuthLayout,Button,
+    Signup,Login,PostForm,PostCard,AuthLayout,Button,
     Input,Select,
 }
