@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux'
 export default function PostForm({ post }) {
     const { register, handleSubmit, watch, setValue, control, getValues } = useForm({
         defaultValues: {
-            title: post?.title || "",
+            Title: post?.Title || "",
             slug: post?.$id || "",
             content: post?.content || "",
             status: post?.status || "active",
@@ -24,23 +24,23 @@ export default function PostForm({ post }) {
             const file = data.image[0] ? await service.uploadFile(data.image[0]) : null;
 
             if (file) {
-                service.deleteFile(post.featuredImage);
+                service.deleteFile(post.featuredimage);
             }
 
             const dbPost = await service.updatePost(post.$id, {
                 ...data,
-                featuredImage: file ? file.$id : undefined,
+                featuredimage: file ? file.$id : undefined,
             });
 
             if (dbPost) {
                 navigate(`/post/${dbPost.$id}`);
             }
         } else {
-            const file = await service.uploadFile(data.image[0]);
+            const File = await service.uploadFile(data.image[0]);
 
-            if (file) {
-                const fileId = file.$id;
-                data.featuredImage = fileId;
+            if (File) {
+                const FileId = File.$id;
+                data.featuredimage = FileId;
                 const dbPost = await service.createPost({ ...data, userId: userData.$id });
 
                 if (dbPost) {
@@ -64,7 +64,7 @@ export default function PostForm({ post }) {
     React.useEffect(() => {
         const subscription = watch((value, { name }) => {
             if (name === "title") {
-                setValue("slug", slugTransform(value.title), { shouldValidate: true });
+                setValue("slug", slugTransform(value.Title), { shouldValidate: true });
             }
         });
 
@@ -102,8 +102,8 @@ export default function PostForm({ post }) {
                 {post && (
                     <div className="w-full mb-4">
                         <img
-                            src={service.getFilePreview(post.featuredImage)}
-                            alt={post.title}
+                            src={service.getFilePreview(post.featuredimage)}
+                            alt={post.Title}
                             className="rounded-lg"
                         />
                     </div>

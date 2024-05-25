@@ -14,16 +14,16 @@ export class Service{
         this.bucket = new Storage(this.client);
     }
 
-    async createPost({title, slug, content, featuredImage, status, userId}){
+    async createPost({Title, slug, content, featuredimage, status, userId}){
         try {
             return await this.databases.createDocument(
                 config.appWriteDatabaseId,
                 config.appWriteCollectionId,
                 slug,
                 {
-                    title,
+                    Title,
                     content,
-                    featuredImage,
+                    featuredimage,
                     status,
                     userId,
                 }
@@ -98,12 +98,12 @@ export class Service{
 
     // file upload service
 
-    async uploadFile(file){
+    async uploadFile(File){
         try {
             return await this.bucket.createFile(
                 config.appWriteBucketId,
                 ID.unique(),
-                file
+                File
             )
         } catch (error) {
             console.log("Appwrite serive :: uploadFile :: error", error);
@@ -111,11 +111,11 @@ export class Service{
         }
     }
 
-    async deleteFile(fileId){
+    async deleteFile(FileId){
         try {
             await this.bucket.deleteFile(
                 config.appWriteBucketId,
-                fileId
+                FileId
             )
             return true
         } catch (error) {
@@ -124,10 +124,10 @@ export class Service{
         }
     }
 
-    getFilePreview(fileId){
+    getFilePreview(FileId){
         return this.bucket.getFilePreview(
             config.appWriteBucketId,
-            fileId
+            FileId
         )
     }
 }
