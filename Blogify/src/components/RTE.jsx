@@ -11,7 +11,7 @@ export default function RTE({name,control,label,defaultValue=''}) {
     <Controller
      name={name || "content"}
      control={control}
-    render={({field:{onchange}})=>(
+    render={({field:{onChange}})=>(
         <Editor
          apiKey='sbiiie2jatmlf27tyfvneucil5ve89ihebihc8yodxic2v5g'
          initialValue={defaultValue}
@@ -45,7 +45,14 @@ export default function RTE({name,control,label,defaultValue=''}) {
             "undo redo | blocks | image | bold italic forecolor | alignleft aligncenter bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent |removeformat | help",
             content_style: "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }"
          }}
-         onEditorChange={onchange}
+         onEditorChange={(content) => {
+          if (content.length <= 3000) {
+            onChange(content);
+          } else {
+            alert("Content must be no longer than 3000 characters.");
+          }
+        }
+      }
         />
     )}
 

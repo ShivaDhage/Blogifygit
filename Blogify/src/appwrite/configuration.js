@@ -14,14 +14,14 @@ export class Service{
         this.bucket = new Storage(this.client);
     }
 
-    async createPost({Title, slug, content, featuredimage, status, userId}){
+    async createPost({title, slug, content, featuredimage, status, userId}){
         try {
             return await this.databases.createDocument(
                 config.appWriteDatabaseId,
                 config.appWriteCollectionId,
                 slug,
                 {
-                    Title,
+                    title,
                     content,
                     featuredimage,
                     status,
@@ -33,25 +33,19 @@ export class Service{
         }
     }
 
-    async updatePost(slug, {title, content, featuredImage, status}){
+    async updatePost(slug, { title, content, featuredimage, status }) {
         try {
-            return await this.databases.updateDocument(
-                config.appWriteDatabaseId,
-                config.appWriteCollectionId,
-                slug,
-                {
-                    title,
-                    content,
-                    featuredImage,
-                    status,
-
-                }
-            )
+          return await this.databases.updateDocument(
+            config.appWriteDatabaseId,
+            config.appWriteCollectionId,
+            slug,
+            { title, content, featuredimage, status } //not giving userId beacuse the person created post only will be able to update
+          );
         } catch (error) {
-            console.log("Appwrite serive :: updatePost :: error", error);
+          console.log("Appwrite service :: updatePost :: error", error);
         }
-    }
-
+      }
+    
     async deletePost(slug){
         try {
             await this.databases.deleteDocument(
@@ -98,12 +92,12 @@ export class Service{
 
     // file upload service
 
-    async uploadFile(File){
+    async uploadFile(file){
         try {
             return await this.bucket.createFile(
                 config.appWriteBucketId,
                 ID.unique(),
-                File
+                file
             )
         } catch (error) {
             console.log("Appwrite serive :: uploadFile :: error", error);
@@ -111,11 +105,11 @@ export class Service{
         }
     }
 
-    async deleteFile(FileId){
+    async deleteFile(fileId){
         try {
             await this.bucket.deleteFile(
                 config.appWriteBucketId,
-                FileId
+                fileId
             )
             return true
         } catch (error) {
@@ -124,12 +118,14 @@ export class Service{
         }
     }
 
-    getFilePreview(FileId){
-        return this.bucket.getFilePreview(
-            config.appWriteBucketId,
-            FileId
-        )
+    getFilePreview(fileId) {
+    try {
+      return this.bucket.getFilePreview(config.appWriteBucketId, fileId);
+    } catch (error) {
+      console.log("Appwrite service :: getFilePreview :: error", error);
+      return false;
     }
+  }
 }
 
 

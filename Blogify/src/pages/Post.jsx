@@ -6,6 +6,7 @@ import { Button, Container } from "../components";
 import parse from "html-react-parser";
 import { useSelector } from "react-redux";
 
+
 export default function Post() {
     const [post, setPost] = useState(null);
     const { slug } = useParams();
@@ -27,7 +28,7 @@ export default function Post() {
     const deletePost = () => {
         appwriteService.deletePost(post.$id).then((status) => {
             if (status) {
-                appwriteService.deleteFile(post.featuredImage);
+                appwriteService.deleteFile(post.featuredimage);
                 navigate("/");
             }
         });
@@ -57,11 +58,11 @@ export default function Post() {
                     )}
                 </div>
                 <div className="w-full mb-6">
-                    <h1 className="text-2xl font-bold">{post.title}</h1>
+                    <h2 className="text-2xl font-bold">{post.title}</h2>
                 </div>
                 <div className="browser-css">
-                    {parse(post.content)}
-                    </div>
+                    {parse(post.content)},{console.log(parse(post.content))}
+                </div>
             </Container>
         </div>
     ) : null;
